@@ -22,6 +22,11 @@ print(X.describe())
 sns.pairplot(X)
 plt.show()
 
+# Streamlit UI to input feature values
+st.title("Wine Classification App")
+st.write("Enter the wine features to predict the wine type")
+
+
 # Histogram display
 X.hist(figsize=(12, 8))
 plt.show()
@@ -34,6 +39,12 @@ st.write("The dataset contains information about different wines.")
 # Show dataset option
 if st.checkbox('Show Dataset'):
     st.write(pd.DataFrame(data.data, columns=data.feature_names))
+
+# User inputs
+input_features = {}
+for feature in data.feature_names:
+    input_features[feature] = st.number_input(f"{feature}", min_value=0.0)
+
 
 # Data training 80%-20%
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
