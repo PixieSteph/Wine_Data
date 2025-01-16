@@ -14,6 +14,18 @@ data = load_wine()
 X = pd.DataFrame(data.data, columns=data.feature_names)
 y = data.target
 
+
+# Basic statistics
+print(X.describe())
+
+# Relationships visualization between features using pairplot
+sns.pairplot(X)
+plt.show()
+
+# Histogram display
+X.hist(figsize=(12, 8))
+plt.show()
+
 # Display dataset on Streanlit
 st.title("Wine Classification with Logistic Regression and Decision Tree")
 st.write("### Wine Dataset Overview")
@@ -23,11 +35,19 @@ st.write("The dataset contains information about different wines.")
 if st.checkbox('Show Dataset'):
     st.write(pd.DataFrame(data.data, columns=data.feature_names))
 
-# Data training
+# Data training 80%-20%
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
+
+# Standardize the data
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# Check for missing values
+print(X.isnull().sum())
 
 # Logistic Regression Model
 logreg = LogisticRegression(random_state=42, max_iter=1000)
